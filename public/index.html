@@ -1,16 +1,43 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SPN - Trading</title><style>body{margin:0;background:#060a14;color:#fff;font-family:sans-serif}.top{display:flex;justify-content:space-between;padding:10px;background:#0a1020;border-bottom:1px solid #1a2a4a}.logo{font-weight:900}.logo span{color:#2de2ff}.main{display:flex;height:calc(100vh - 50px)}.left{width:110px;background:#0a1020;border-right:1px solid #1a2a4a;overflow:auto}.asset{padding:10px;font-size:11px;border-bottom:1px solid #111;cursor:pointer}.asset.on{background:#111c36;color:#2de2ff}.chart{flex:1;display:flex;flex-direction:column}.price{font-size:22px;font-weight:900;padding:10px}#tv{flex:1;background:#060a14;min-height:300px}.right{width:160px;background:#0a1020;border-left:1px solid #1a2a4a;padding:10px}.right input,.right select{width:100%;padding:10px;margin:5px 0;background:#060c1e;border:1px solid #1e2f5a;color:#fff;border-radius:8px;box-sizing:border-box}.buy{background:#00e676;color:#000;padding:14px;border-radius:10px;font-weight:900;border:none;width:100%;margin:5px 0}.sell{background:#ff4258;color:#fff;padding:14px;border-radius:10px;font-weight:900;border:none;width:100%;margin:5px 0}</style><script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script></head><body>
-<div class="top"><div class="logo">SPN<span>BINARY</span> <span id="userPhone" style="font-size:10px;color:#8aa0c0;margin-left:8px"></span></div><div><span id="bal" style="color:#00e676;font-weight:900">$0</span><button onclick="location.href='index.html'" style="margin-left:8px;background:#162244;color:#fff;border:1px solid #243252;border-radius:999px;padding:4px 10px;font-size:11px">Logout</button></div></div>
-<div class="main"><div class="left" id="alist"></div><div class="chart"><div class="price" id="pr">0.00 <span id="timer" style="float:right;color:#2de2ff;font-size:12px"></span></div><div id="tv"></div></div><div class="right"><label style="font-size:9px;color:#6b7da0">AMOUNT ($)</label><input id="amt" type="number" value="50"><label style="font-size:9px;color:#6b7da0">EXPIRY</label><select id="exp"><option value="30">30 sec</option><option value="60">60 sec</option><option value="120">2 min</option></select><div style="font-size:11px;margin:8px 0">Payout <b id="pay" style="color:#00e676">+$47.50</b></div><button class="buy" onclick="tr('buy')">▲ BUY</button><button class="sell" onclick="tr('sell')">▼ SELL</button><button onclick="dep()" style="width:100%;padding:10px;margin-top:10px;background:#0f1930;border:1px solid #1f315c;color:#fff;border-radius:8px;font-size:11px">Deposit M-Pesa</button><button onclick="location.href='admin.html'" id="adminLink" style="display:none;width:100%;padding:8px;margin-top:6px;background:gold;color:#000;border:none;border-radius:8px;font-weight:900;font-size:10px">👑 Owner Panel</button></div></div>
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SPN - Login</title><style>*{box-sizing:border-box}body{margin:0;background:#060a14;color:#fff;font-family:sans-serif;min-height:100vh}.h{padding:16px;background:#0a1020;border-bottom:1px solid #1a2a4a;display:flex;justify-content:space-between;align-items:center}.logo{font-weight:900;font-size:22px}.logo span{color:#2de2ff}.wrap{max-width:420px;margin:0 auto;padding:24px}.card{background:#0f1930;border:1px solid #1f315c;border-radius:20px;padding:24px;margin-top:20px}select,input{width:100%;padding:16px;margin:8px 0;border-radius:12px;border:2px solid #1e2f5a;background:#060c1e;color:#fff;font-size:16px}label{font-size:11px;color:#8aa0c0;margin-top:10px;display:block}.btn{width:100%;padding:16px;border-radius:12px;border:none;font-weight:900;font-size:16px;margin-top:12px;cursor:pointer}.g{background:linear-gradient(90deg,#2de2ff,#6a7bff);color:#000}.d{background:#162244;color:#fff;border:1px solid #243252}.msg{padding:12px;border-radius:10px;display:none;text-align:center;margin:10px 0}</style></head><body>
+<div class="h"><div class="logo">SPN<span>BINARY</span></div><div style="color:#2de2ff;font-size:11px">SECURE LOGIN</div></div>
+<div class="wrap">
+<h1 style="font-size:32px;font-weight:900;margin:20px 0 8px">Welcome Back</h1>
+<p style="color:#8aa0c0;margin:0 0 20px">Login with country code. Numbers saved as +254...</p>
+<div class="card">
+<div id="m" class="msg"></div>
+<label>COUNTRY CODE LIST</label>
+<select id="cc">
+<option value="+254">🇰🇪 Kenya +254</option>
+<option value="+255">🇹🇿 Tanzania +255</option>
+<option value="+256">🇺🇬 Uganda +256</option>
+<option value="+250">🇷🇼 Rwanda +250</option>
+<option value="+257">🇧🇮 Burundi +257</option>
+<option value="+251">🇪🇹 Ethiopia +251</option>
+<option value="+27">🇿🇦 South Africa +27</option>
+<option value="+234">🇳🇬 Nigeria +234</option>
+<option value="+233">🇬🇭 Ghana +233</option>
+<option value="+212">🇲🇦 Morocco +212</option>
+<option value="+20">🇪🇬 Egypt +20</option>
+<option value="+1">🇺🇸 USA +1</option>
+<option value="+44">🇬🇧 UK +44</option>
+<option value="+91">🇮🇳 India +91</option>
+<option value="+971">🇦🇪 UAE +971</option>
+<option value="+966">🇸🇦 Saudi +966</option>
+</select>
+<label>PHONE NUMBER (without 0, e.g 791895658)</label>
+<input id="ph" type="number" placeholder="791895658">
+<label>PASSWORD</label>
+<input id="pw" type="password" placeholder="Minimum 6 characters">
+<button class="btn g" onclick="reg()">Create Account →</button>
+<button class="btn d" onclick="log()">Login to Trading →</button>
+<p style="font-size:10px;color:#5a6e8f;text-align:center;margin-top:16px">Owner only: +254791895658 | All phones start with + country code</p>
+</div>
+</div>
 <script>
-const OWNER="+254791895658";let assets=[{n:'Volatility 10',v:10,p:5423},{n:'Volatility 25',v:25,p:8345},{n:'Volatility 50',v:50,p:12345},{n:'Volatility 75',v:75,p:12543},{n:'Volatility 100',v:100,p:15678},{n:'EUR/USD',v:15,p:1.0845},{n:'GBP/USD',v:14,p:1.2734},{n:'BTC/USD',v:90,p:43256},{n:'Gold',v:30,p:2034}];let cur=assets[3],price=cur.p,candles=[],act=null,bal=0,chart,srs;
-let curPhone=localStorage.getItem('cur');if(!curPhone){location.href='index.html'}document.getElementById('userPhone').textContent=curPhone;if(curPhone===OWNER)document.getElementById('adminLink').style.display='block';
-function load(){bal=parseFloat(localStorage.getItem('b_'+curPhone)||'10000');document.getElementById('bal').textContent='$'+bal.toFixed(2);calc()}function calc(){let a=parseFloat(document.getElementById('amt').value||0);document.getElementById('pay').textContent='+$'+(a*0.95).toFixed(2)}document.getElementById('amt').oninput=calc;load();
-function initA(){let el=document.getElementById('alist');el.innerHTML='';assets.forEach((a,i)=>{let d=document.createElement('div');d.className='asset'+(i==3?' on':'');d.innerHTML=a.n+'<br><span style="color:#6b7da0">'+a.p+'</span>';d.onclick=()=>{document.querySelectorAll('.asset').forEach(x=>x.classList.remove('on'));d.classList.add('on');cur=a;price=a.p;candles=[];gen()};el.appendChild(d)})}
-function initC(){let e=document.getElementById('tv');chart=LightweightCharts.createChart(e,{layout:{background:{color:'#060a14'},textColor:'#6b7da0'},grid:{vertLines:{color:'#0e1930'},horzLines:{color:'#0e1930'}},width:e.clientWidth,height:350});srs=chart.addCandlestickSeries({upColor:'#00e676',downColor:'#ff4258'});gen();setInterval(up,1000)}
-function gen(){let t=Math.floor(Date.now()/1000)-200,p=cur.p;candles=[];for(let i=0;i<120;i++){let o=p,ch=(Math.random()-0.5)*cur.v*0.6,c=o+ch,h=Math.max(o,c)+Math.random()*cur.v*0.3,l=Math.min(o,c)-Math.random()*cur.v*0.3;candles.push({time:t+i,open:o,high:h,low:l,close:c});p=c}srs.setData(candles);price=p;document.getElementById('pr').textContent=price.toFixed(2)}
-function up(){if(!candles.length)return;let last=candles[candles.length-1],nc=last.close+(Math.random()-0.5)*cur.v*0.4;let u={...last,close:nc,high:Math.max(last.high,nc),low:Math.min(last.low,nc)};candles[candles.length-1]=u;srs.update(u);price=nc;document.getElementById('pr').textContent=price.toFixed(2)}
-function tr(dir){if(act){alert('Wait trade finish');return}let amt=parseFloat(document.getElementById('amt').value||0);if(bal<amt){alert('Low balance');return}bal-=amt;localStorage.setItem('b_'+curPhone,bal);load();act={dir,amt,entry:price};let sec=parseInt(document.getElementById('exp').value);let el=document.getElementById('timer');el.textContent='00:'+sec;let it=setInterval(()=>{sec--;el.textContent='00:'+(sec<10?'0':'')+sec;if(sec<=0){clearInterval(it);fin();}},1000);srs.setMarkers([{time:candles[candles.length-1].time,position:dir=='buy'?'belowBar':'aboveBar',color:dir=='buy'?'#00e676':'#ff4258',shape:dir=='buy'?'arrowUp':'arrowDown',text:dir.toUpperCase()}])}
-function fin(){if(!act)return;let exit=price,win=(act.dir=='buy'&&exit>act.entry)||(act.dir=='sell'&&exit<act.entry);let b=parseFloat(localStorage.getItem('b_'+curPhone)||0),txt='';if(win){let pr=act.amt*1.95;b+=pr;txt='WIN +$'+(pr-act.amt).toFixed(2)}else txt='LOSS -$'+act.amt.toFixed(2);localStorage.setItem('b_'+curPhone,b);load();act=null;setTimeout(()=>alert(txt),100)}
-function dep(){let amt=prompt('Amount KES:','500');if(!amt)return;let b=parseFloat(localStorage.getItem('b_'+curPhone)||0)+parseFloat(amt)/130;localStorage.setItem('b_'+curPhone,b);load();alert('Added $'+(parseFloat(amt)/130).toFixed(2))}
-initA();initC();
+const OWNER="+254791895658";
+function show(t,ok){let e=document.getElementById('m');e.textContent=t;e.style.background=ok?'#0a2e1a':'#2e0a0a';e.style.color=ok?'#4ade80':'#f87171';e.style.display='block';setTimeout(()=>e.style.display='none',3000)}
+function getPhone(){let cc=document.getElementById('cc').value;let ph=document.getElementById('ph').value.trim().replace(/^0+/,'');if(ph.length<7)return null;return cc+ph}
+function reg(){let full=getPhone();let pw=document.getElementById('pw').value.trim();if(!full){show('Enter phone without 0',0);return}if(pw.length<6){show('Password min 6',0);return}let u=JSON.parse(localStorage.getItem('u')||'{}');if(u[full]){show('Exists, login',0);return}u[full]=pw;localStorage.setItem('u',JSON.stringify(u));localStorage.setItem('cur',full);localStorage.setItem('b_'+full,'10000');show('Created '+full,1);setTimeout(()=>location.href='trade.html',800)}
+function log(){let full=getPhone();let pw=document.getElementById('pw').value.trim();if(!full){show('Enter phone',0);return}let u=JSON.parse(localStorage.getItem('u')||'{}');if(!u[full]||u[full]!=pw){show('Wrong - check country code + phone',0);return}localStorage.setItem('cur',full);show('Welcome '+full,1);setTimeout(()=>location.href=full===OWNER?'admin.html':'trade.html',700)}
 </script></body></html>
