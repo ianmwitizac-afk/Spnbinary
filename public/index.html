@@ -1,1 +1,11 @@
-spnbinary-1.onrender.com/
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SPN Login</title><style>*{box-sizing:border-box}body{margin:0;background:#060a14;color:#fff;font-family:sans-serif;min-height:100vh}.h{padding:16px;background:#0a1020;border-bottom:1px solid #1a2a4a}.wrap{max-width:420px;margin:0 auto;padding:24px}.card{background:#0f1930;border:1px solid #1f315c;border-radius:20px;padding:24px}select,input{width:100%;padding:16px;margin:8px 0;border-radius:12px;border:2px solid #1e2f5a;background:#060c1e;color:#fff;font-size:16px}.btn{width:100%;padding:16px;border-radius:12px;border:none;font-weight:900;margin-top:12px}.g{background:linear-gradient(90deg,#2de2ff,#6a7bff);color:#000}.d{background:#162244;color:#fff}</style></head><body>
+<div class="h"><b>SPN<span style="color:#2de2ff">BINARY</span></b></div><div class="wrap"><div class="card">
+<select id="cc"><option value="+254">Kenya +254</option><option value="+255">Tanzania +255</option><option value="+256">Uganda +256</option><option value="+250">Rwanda +250</option><option value="+27">SA +27</option><option value="+1">USA +1</option></select>
+<input id="ph" placeholder="791895658" type="number"><input id="pw" type="password" placeholder="123456">
+<button class="btn g" onclick="reg()">Create Account →</button><button class="btn d" onclick="log()">Login →</button>
+<p style="text-align:center;font-size:10px;color:#5a6e8f;margin-top:12px">Owner +254791895658</p></div></div>
+<script>
+function gp(){let cc=document.getElementById('cc').value;let ph=document.getElementById('ph').value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(ph.startsWith('254'))ph=ph.slice(3);if(ph.length<7)return null;return cc+ph}
+function reg(){let f=gp();let pw=document.getElementById('pw').value;if(!f||pw.length<6){alert('Enter 791895658 + password 6+');return}let u=JSON.parse(localStorage.getItem('u')||'{}');u[f]=pw;localStorage.setItem('u',JSON.stringify(u));localStorage.setItem('cur',f);if(!localStorage.getItem('b_'+f))localStorage.setItem('b_'+f,'10000');location.href='trade.html'}
+function log(){let f=gp();let pw=document.getElementById('pw').value;let u=JSON.parse(localStorage.getItem('u')||'{}');if(!u[f]){alert('No account '+f+' - Create first');return}if(u[f]!=pw){alert('Wrong password');return}localStorage.setItem('cur',f);location.href=f=='+254791895658'?'admin.html':'trade.html'}
+</script></body></html>
