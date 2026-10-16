@@ -1,79 +1,11 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>SPN Trade</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#060a14;color:#fff;font-family:sans-serif;height:100vh;overflow:hidden;display:flex;flex-direction:column}
-.top{height:50px;background:#0a1020;border-bottom:1px solid #1a2a4a;display:flex;align-items:center;justify-content:space-between;padding:0 12px}
-.tabs{display:flex;gap:6px;background:#0a1020;padding:8px;border-bottom:1px solid #1a2a4a}
-.tab{flex:1;padding:12px;text-align:center;background:#162244;border-radius:10px;font-weight:900;font-size:13px;cursor:pointer;border:1px solid #1e2f5a}
-.tab.active{background:linear-gradient(90deg,#2de2ff,#6a7bff);color:#000}
-.main{flex:1;display:flex;overflow:hidden;position:relative}
-.panel{display:none;flex:1;overflow:auto;background:#080e22}
-.panel.active{display:flex;flex-direction:column}
-#markets{width:100%}
-.market{padding:16px;border-bottom:1px solid #122044;display:flex;justify-content:space-between}
-.market.active{background:#132040;color:#2de2ff}
-#chartWrap{flex:1;position:relative;background:#060a14}
-canvas{width:100%!important;height:100%!important}
-#tradePanel{padding:16px;background:#0a1020}
-input,select{width:100%;padding:16px;margin:8px 0;border-radius:12px;border:2px solid #1e2f5a;background:#060c1e;color:#fff;font-size:18px}
-.btn{width:100%;padding:18px;border-radius:14px;border:none;font-weight:900;font-size:18px;margin-top:10px}
-.buy{background:#00e676;color:#000}
-.sell{background:#ff3d57;color:#fff}
-.owner{background:#ffcc00;color:#000;margin-top:12px}
-.price{font-size:42px;font-weight:900;text-align:center;padding:12px}
-.badge{padding:8px 12px;background:#162244;border-radius:20px;font-size:12px}
-</style></head><body>
-<div class="top">
-<div><b>SPN<span style="color:#2de2ff">BINARY</span></b> <span id="ph" style="font-size:11px;color:#8aa"></span></div>
-<div style="display:flex;gap:8px;align-items:center"><span id="bal" style="color:#00e676;font-weight:900">$10000</span><button onclick="logout()" style="padding:6px 12px;border-radius:20px;border:none;background:#1a2a4a;color:#fff;font-size:12px">Logout</button></div>
-</div>
-<div class="tabs">
-<div class="tab active" onclick="openPanel('markets')" id="t-markets">📊 MARKETS</div>
-<div class="tab" onclick="openPanel('chart')" id="t-chart">📈 CHART</div>
-<div class="tab" onclick="openPanel('trade')" id="t-trade">💰 TRADE</div>
-</div>
-<div class="main">
-<div id="panel-markets" class="panel active">
-<div class="market active" onclick="sel(this,'Volatility 75')"><span>Volatility 75</span><span>12543</span></div>
-<div class="market" onclick="sel(this,'Volatility 10')"><span>Volatility 10</span><span>5423</span></div>
-<div class="market" onclick="sel(this,'Volatility 25')"><span>Volatility 25</span><span>8345</span></div>
-<div class="market" onclick="sel(this,'Volatility 50')"><span>Volatility 50</span><span>12345</span></div>
-<div class="market" onclick="sel(this,'Volatility 100')"><span>Volatility 100</span><span>15678</span></div>
-<div class="market" onclick="sel(this,'EUR/USD')"><span>EUR/USD</span><span>1.0845</span></div>
-<div class="market" onclick="sel(this,'GBP/USD')"><span>GBP/USD</span><span>1.2734</span></div>
-<div class="market" onclick="sel(this,'BTC/USD')"><span>BTC/USD</span><span>43256</span></div>
-<div class="market" onclick="sel(this,'Gold')"><span>Gold</span><span>2034</span></div>
-</div>
-<div id="panel-chart" class="panel"><div class="price" id="price">12604.49</div><div id="chartWrap"><canvas id="c"></canvas></div></div>
-<div id="panel-trade" class="panel">
-<div style="text-align:center;margin-bottom:10px"><span id="p2" class="badge">Volatility 75 - 12604.49</span></div>
-<input id="amt" type="number" value="50"><select id="dur"><option value="30">30s - 95% Payout</option><option value="60">60s - 95%</option><option value="120">2min</option><option value="300">5min</option></select>
-<div style="color:#8aa;font-size:14px">Payout <span id="pay" style="color:#00e676;font-weight:900">+$47.50</span></div>
-<button class="btn buy" onclick="buy()">▲ BUY</button>
-<button class="btn sell" onclick="sell()">▼ SELL</button>
-<button class="btn owner" onclick="location.href='admin.html'">👑 OWNER PANEL</button>
-<div id="trades" style="margin-top:12px"></div>
-</div>
-</div>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SPN Login</title><style>*{box-sizing:border-box}body{margin:0;background:#060a14;color:#fff;font-family:sans-serif;min-height:100vh}.h{padding:16px;background:#0a1020;border-bottom:1px solid #1a2a4a}.wrap{max-width:420px;margin:0 auto;padding:24px}.card{background:#0f1930;border:1px solid #1f315c;border-radius:20px;padding:24px}select,input{width:100%;padding:16px;margin:8px 0;border-radius:12px;border:2px solid #1e2f5a;background:#060c1e;color:#fff;font-size:16px}.btn{width:100%;padding:16px;border-radius:12px;border:none;font-weight:900;margin-top:12px}.g{background:linear-gradient(90deg,#2de2ff,#6a7bff);color:#000}.d{background:#162244;color:#fff}</style></head><body>
+<div class="h"><b>SPN<span style="color:#2de2ff">BINARY</span></b></div><div class="wrap"><div class="card">
+<select id="cc"><option value="+254">Kenya +254</option><option value="+255">Tanzania +255</option><option value="+256">Uganda +256</option><option value="+250">Rwanda +250</option><option value="+27">SA +27</option><option value="+1">USA +1</option></select>
+<input id="ph" placeholder="791895658" type="number"><input id="pw" type="password" placeholder="123456">
+<button class="btn g" onclick="reg()">Create Account →</button><button class="btn d" onclick="log()">Login →</button>
+</div></div>
 <script>
-let curM='Volatility 75';let curP=12604.49;let bal=10000;
-function openPanel(n){
-document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-document.getElementById('panel-'+n).classList.add('active');
-document.getElementById('t-'+n).classList.add('active');
-if(n==='chart')draw();
-}
-function sel(el,m){curM=m;document.querySelectorAll('.market').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.getElementById('p2').innerText=m+' - '+curP;openPanel('chart')}
-function draw(){
-let cv=document.getElementById('c');let ctx=cv.getContext('2d');cv.width=cv.parentElement.clientWidth;cv.height=cv.parentElement.clientHeight;
-ctx.clearRect(0,0,cv.width,cv.height);let w=cv.width/50;
-for(let i=0;i<40;i++){let x=i*w+20;let o=Math.random()*100+12550;let c=o+Math.random()*40-20;let h=Math.max(o,c)+15;let l=Math.min(o,c)-15;ctx.strokeStyle='#2de2ff';ctx.beginPath();ctx.moveTo(x+w/2,l);ctx.lineTo(x+w/2,h);ctx.stroke();ctx.fillStyle=c>o?'#00e676':'#ff3d57';ctx.fillRect(x,o,c-o,w*0.7)}
-}
-setInterval(()=>{curP+=(Math.random()-0.5)*5;document.getElementById('price').innerText=curP.toFixed(2);let p2=document.getElementById('p2');if(p2)p2.innerText=curM+' - '+curP.toFixed(2)},500);
-function buy(){trade('BUY')};function sell(){trade('SELL')}
-function trade(t){let a=parseFloat(document.getElementById('amt').value);if(a>bal){alert('Low balance');return}bal-=a;document.getElementById('bal').innerText='$'+bal.toFixed(2);let id=Date.now();let d=document.createElement('div');d.style.cssText='background:#162244;padding:12px;border-radius:10px;margin-top:8px';d.innerHTML=t+' '+curM+' $'+a+' <span id="c'+id+'">30s</span>';document.getElementById('trades').prepend(d);let s=30;let it=setInterval(()=>{s--;document.getElementById('c'+id).innerText=s+'s';if(s<=0){clearInterval(it);let win=Math.random()>0.45;if(win){let pr=a*0.95;bal+=a+pr;document.getElementById('bal').innerText='$'+bal.toFixed(2);d.innerHTML+=' <b style="color:#00e676">WIN +$'+pr.toFixed(2)+'</b>'}else{d.innerHTML+=' <b style="color:#ff3d57">LOSS -$'+a+'</b>'} }},1000)}
-function logout(){localStorage.removeItem('cur');location.href='index.html'}
-let u=localStorage.getItem('cur');if(u){document.getElementById('ph').innerText=u;let b=localStorage.getItem('b_'+u);if(b){bal=parseFloat(b);document.getElementById('bal').innerText='$'+bal.toFixed(2)}}draw();
-document.getElementById('amt').addEventListener('input',e=>{document.getElementById('pay').innerText='+$'+(e.target.value*0.95).toFixed(2)});
+function gp(){let cc=document.getElementById('cc').value;let ph=document.getElementById('ph').value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(ph.startsWith('254'))ph=ph.slice(3);if(ph.length<7)return null;return cc+ph}
+function reg(){let f=gp();let pw=document.getElementById('pw').value;if(!f||pw.length<6){alert('Enter 791895658');return}let u=JSON.parse(localStorage.getItem('u')||'{}');u[f]=pw;localStorage.setItem('u',JSON.stringify(u));localStorage.setItem('cur',f);if(!localStorage.getItem('b_'+f))localStorage.setItem('b_'+f,'10000');location.href='trade.html'}
+function log(){let f=gp();let pw=document.getElementById('pw').value;let u=JSON.parse(localStorage.getItem('u')||'{}');if(!u[f]){alert('No account - Create first');return}if(u[f]!=pw){alert('Wrong');return}localStorage.setItem('cur',f);location.href=f=='+254791895658'?'admin.html':'trade.html'}
 </script></body></html>
