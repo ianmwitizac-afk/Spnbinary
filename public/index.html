@@ -1,46 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SPN BINARY - Login</title><style>body{margin:0;background:#060a14;color:#fff;font-family:sans-serif}.h{display:flex;justify-content:space-between;padding:14px;background:#0a1020;border-bottom:1px solid #1a2a4a}.logo{font-weight:900;font-size:22px}.logo span{color:#2de2ff}.card{max-width:380px;margin:30px auto;background:#0f1930;border:1px solid #1f315c;border-radius:16px;padding:20px}select,input{width:100%;padding:14px;margin:6px 0;border-radius:10px;border:1px solid #1e2f5a;background:#060c1e;color:#fff;box-sizing:border-box;font-size:15px}.row{display:flex;gap:8px}.row select{flex:1}.row input{flex:2}.btn{width:100%;padding:14px;border-radius:10px;border:none;font-weight:900;cursor:pointer;margin-top:8px}.g{background:linear-gradient(90deg,#2de2ff,#6a7bff);color:#000}.d{background:#162244;color:#fff;border:1px solid #243252}.msg{padding:10px;border-radius:8px;display:none;text-align:center;margin:8px 0;font-size:13px}</style></head><body>
-<div class="h"><div class="logo">SPN<span>BINARY</span></div><div style="color:#2de2ff;font-size:10px">LIVE TRADING</div></div>
-<div style="text-align:center;padding:20px"><h1 style="font-size:28px;font-weight:900;margin:0">Welcome to SPN Binary</h1><p style="color:#8aa0c0">Select country code + enter number</p></div>
-<div class="card">
-<h3 style="margin-top:0">Create / Login</h3>
-<div id="m" class="msg"></div>
-<label style="font-size:11px;color:#6b7da0">COUNTRY CODE</label>
-<select id="cc">
-<option value="+254">🇰🇪 Kenya +254</option>
-<option value="+255">🇹🇿 Tanzania +255</option>
-<option value="+256">🇺🇬 Uganda +256</option>
-<option value="+250">🇷🇼 Rwanda +250</option>
-<option value="+257">🇧🇮 Burundi +257</option>
-<option value="+251">🇪🇹 Ethiopia +251</option>
-<option value="+27">🇿🇦 South Africa +27</option>
-<option value="+234">🇳🇬 Nigeria +234</option>
-<option value="+233">🇬🇭 Ghana +233</option>
-<option value="+1">🇺🇸 USA +1</option>
-<option value="+44">🇬🇧 UK +44</option>
-<option value="+91">🇮🇳 India +91</option>
-<option value="+971">🇦🇪 UAE +971</option>
-<option value="+966">🇸🇦 Saudi +966</option>
-</select>
-<label style="font-size:11px;color:#6b7da0">PHONE NUMBER (without 0)</label>
-<div class="row">
-<select id="cc2" style="flex:0.5" onchange="document.getElementById('cc').value=this.value">
-<option value="+254">+254</option><option value="+255">+255</option><option value="+256">+256</option><option value="+27">+27</option><option value="+234">+234</option><option value="+1">+1</option><option value="+44">+44</option>
-</select>
-<input id="ph" type="number" placeholder="791895658 (without 0)">
-</div>
-<label style="font-size:11px;color:#6b7da0">PASSWORD</label>
-<input id="pw" type="password" placeholder="Min 6 characters">
-<button class="btn g" onclick="reg()">Create Account →</button>
-<button class="btn d" onclick="log()">Login to Trading</button>
-<p style="font-size:10px;color:#5a6e8f;text-align:center;margin-top:10px">Owner: +254791895658 only | All numbers saved with country code</p>
-</div>
-<script>
-const OWNER_FULL="+254791895658";
-function show(t,ok){let e=document.getElementById('m');e.textContent=t;e.style.background=ok?'#0a2e1a':'#2e0a0a';e.style.color=ok?'#4ade80':'#f87171';e.style.display='block';setTimeout(()=>e.style.display='none',3000)}
-function getFullPhone(){let cc=document.getElementById('cc').value;let ph=document.getElementById('ph').value.trim().replace(/^0+/,'');if(ph.length<7){return null}return cc+ph}
-function reg(){let full=getFullPhone();let pw=document.getElementById('pw').value.trim();if(!full){show('Enter phone without 0, e.g 791895658',0);return}if(pw.length<6){show('Password min 6',0);return}let u=JSON.parse(localStorage.getItem('u')||'{}');if(u[full]){show('Exists - please login',0);return}u[full]=pw;localStorage.setItem('u',JSON.stringify(u));localStorage.setItem('cur',full);localStorage.setItem('b_'+full,'10000');show('Created '+full+'! Opening...',1);setTimeout(()=>location.href='trade.html',800)}
-function log(){let full=getFullPhone();let pw=document.getElementById('pw').value.trim();if(!full){show('Enter phone',0);return}let u=JSON.parse(localStorage.getItem('u')||'{}');if(!u[full]||u[full]!=pw){show('Wrong phone/password - phone must include country code',0);return}localStorage.setItem('cur',full);show('Welcome '+full,1);setTimeout(()=>{if(full===OWNER_FULL) location.href='admin.html'; else location.href='trade.html';},600)}
-</script></body></html><!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SPN - Trading</title><style>body{margin:0;background:#060a14;color:#fff;font-family:sans-serif}.top{display:flex;justify-content:space-between;padding:10px;background:#0a1020;border-bottom:1px solid #1a2a4a}.logo{font-weight:900}.logo span{color:#2de2ff}.main{display:flex;height:calc(100vh - 50px)}.left{width:110px;background:#0a1020;border-right:1px solid #1a2a4a;overflow:auto}.asset{padding:10px;font-size:11px;border-bottom:1px solid #111;cursor:pointer}.asset.on{background:#111c36;color:#2de2ff}.chart{flex:1;display:flex;flex-direction:column}.price{font-size:22px;font-weight:900;padding:10px}#tv{flex:1;background:#060a14;min-height:300px}.right{width:160px;background:#0a1020;border-left:1px solid #1a2a4a;padding:10px}.right input,.right select{width:100%;padding:10px;margin:5px 0;background:#060c1e;border:1px solid #1e2f5a;color:#fff;border-radius:8px;box-sizing:border-box}.buy{background:#00e676;color:#000;padding:14px;border-radius:10px;font-weight:900;border:none;width:100%;margin:5px 0}.sell{background:#ff4258;color:#fff;padding:14px;border-radius:10px;font-weight:900;border:none;width:100%;margin:5px 0}</style><script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script></head><body>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SPN - Trading</title><style>body{margin:0;background:#060a14;color:#fff;font-family:sans-serif}.top{display:flex;justify-content:space-between;padding:10px;background:#0a1020;border-bottom:1px solid #1a2a4a}.logo{font-weight:900}.logo span{color:#2de2ff}.main{display:flex;height:calc(100vh - 50px)}.left{width:110px;background:#0a1020;border-right:1px solid #1a2a4a;overflow:auto}.asset{padding:10px;font-size:11px;border-bottom:1px solid #111;cursor:pointer}.asset.on{background:#111c36;color:#2de2ff}.chart{flex:1;display:flex;flex-direction:column}.price{font-size:22px;font-weight:900;padding:10px}#tv{flex:1;background:#060a14;min-height:300px}.right{width:160px;background:#0a1020;border-left:1px solid #1a2a4a;padding:10px}.right input,.right select{width:100%;padding:10px;margin:5px 0;background:#060c1e;border:1px solid #1e2f5a;color:#fff;border-radius:8px;box-sizing:border-box}.buy{background:#00e676;color:#000;padding:14px;border-radius:10px;font-weight:900;border:none;width:100%;margin:5px 0}.sell{background:#ff4258;color:#fff;padding:14px;border-radius:10px;font-weight:900;border:none;width:100%;margin:5px 0}</style><script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script></head><body>
 <div class="top"><div class="logo">SPN<span>BINARY</span> <span id="userPhone" style="font-size:10px;color:#8aa0c0;margin-left:8px"></span></div><div><span id="bal" style="color:#00e676;font-weight:900">$0</span><button onclick="location.href='index.html'" style="margin-left:8px;background:#162244;color:#fff;border:1px solid #243252;border-radius:999px;padding:4px 10px;font-size:11px">Logout</button></div></div>
 <div class="main"><div class="left" id="alist"></div><div class="chart"><div class="price" id="pr">0.00 <span id="timer" style="float:right;color:#2de2ff;font-size:12px"></span></div><div id="tv"></div></div><div class="right"><label style="font-size:9px;color:#6b7da0">AMOUNT ($)</label><input id="amt" type="number" value="50"><label style="font-size:9px;color:#6b7da0">EXPIRY</label><select id="exp"><option value="30">30 sec</option><option value="60">60 sec</option><option value="120">2 min</option></select><div style="font-size:11px;margin:8px 0">Payout <b id="pay" style="color:#00e676">+$47.50</b></div><button class="buy" onclick="tr('buy')">▲ BUY</button><button class="sell" onclick="tr('sell')">▼ SELL</button><button onclick="dep()" style="width:100%;padding:10px;margin-top:10px;background:#0f1930;border:1px solid #1f315c;color:#fff;border-radius:8px;font-size:11px">Deposit M-Pesa</button><button onclick="location.href='admin.html'" id="adminLink" style="display:none;width:100%;padding:8px;margin-top:6px;background:gold;color:#000;border:none;border-radius:8px;font-weight:900;font-size:10px">👑 Owner Panel</button></div></div>
 <script>
@@ -55,27 +13,4 @@ function tr(dir){if(act){alert('Wait trade finish');return}let amt=parseFloat(do
 function fin(){if(!act)return;let exit=price,win=(act.dir=='buy'&&exit>act.entry)||(act.dir=='sell'&&exit<act.entry);let b=parseFloat(localStorage.getItem('b_'+curPhone)||0),txt='';if(win){let pr=act.amt*1.95;b+=pr;txt='WIN +$'+(pr-act.amt).toFixed(2)}else txt='LOSS -$'+act.amt.toFixed(2);localStorage.setItem('b_'+curPhone,b);load();act=null;setTimeout(()=>alert(txt),100)}
 function dep(){let amt=prompt('Amount KES:','500');if(!amt)return;let b=parseFloat(localStorage.getItem('b_'+curPhone)||0)+parseFloat(amt)/130;localStorage.setItem('b_'+curPhone,b);load();alert('Added $'+(parseFloat(amt)/130).toFixed(2))}
 initA();initC();
-</script></body></html><!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Owner Panel</title><style>body{margin:0;background:#020510;color:#fff;font-family:sans-serif}.h{display:flex;justify-content:space-between;padding:14px;background:#0a1020;border-bottom:1px solid #1a2a4a}.logo{font-weight:900}.logo span{color:gold}.card{max-width:600px;margin:12px auto;background:#0f1930;border:1px solid #1f315c;border-radius:12px;padding:14px}input,select{width:100%;padding:16px;margin:8px 0;background:#060c1e;border:2px solid #1e2f5a;color:#fff;border-radius:10px;font-size:16px;box-sizing:border-box}.btn{padding:14px;border:none;border-radius:10px;font-weight:900;width:100%;margin:6px 0;cursor:pointer}.userRow{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1a2a4a;font-size:13px}</style></head><body>
-<div class="h"><div class="logo">👑 OWNER <span>+254791895658</span></div><div><button onclick="location.href='trade.html'" style="background:#162244;color:#fff;border:1px solid #243252;border-radius:999px;padding:6px 12px">Trading</button> <button onclick="location.href='index.html'" style="background:#162244;color:#fff;border:1px solid #243252;border-radius:999px;padding:6px 12px">Logout</button></div></div>
-<div class="card"><h3 style="margin:0">Dashboard</h3><p style="color:#8aa0c0;font-size:12px">Only you +254791895658 can see this</p><div style="display:flex;gap:10px;margin-top:10px"><div style="flex:1;background:#060c1e;border:1px solid #1a2a4a;border-radius:10px;padding:10px;text-align:center"><div style="font-size:11px;color:#6b7da0">Total Users</div><div id="totalU" style="font-size:20px;font-weight:900">0</div></div><div style="flex:1;background:#060c1e;border:1px solid #1a2a4a;border-radius:10px;padding:10px;text-align:center"><div style="font-size:11px;color:#6b7da0">Total $</div><div id="totalB" style="font-size:20px;font-weight:900;color:#00e676">0</div></div></div><div id="list" style="margin-top:12px"></div></div>
-<div class="card"><h3>Manage User (with Country Code)</h3>
-<label style="font-size:11px;color:#6b7da0">COUNTRY CODE</label>
-<select id="cc"><option value="+254">🇰🇪 +254 Kenya</option><option value="+255">+255 Tanzania</option><option value="+256">+256 Uganda</option><option value="+27">+27 SA</option><option value="+234">+234 Nigeria</option><option value="+1">+1 USA</option><option value="+44">+44 UK</option></select>
-<div style="display:flex;gap:8px"><select id="cc2" style="flex:0.4"><option>+254</option><option>+255</option><option>+256</option><option>+27</option><option>+234</option><option>+1</option><option>+44</option></select><input id="ph" type="number" placeholder="791895658 - without 0" style="flex:1"></div>
-<label style="font-size:11px;color:#6b7da0">AMOUNT ($)</label>
-<input id="amt" type="number" placeholder="e.g 1000 - BIG BOX EASY TO TYPE">
-<button class="btn" style="background:#00e676;color:#000" onclick="addM()">+ ADD MONEY</button>
-<button class="btn" style="background:#ff4258;color:#fff" onclick="subM()">- REMOVE MONEY</button>
-<button class="btn" style="background:#1a2a4a;color:#fff" onclick="ban()">BAN USER</button>
-<p id="msg" style="text-align:center;color:#00e676;display:none"></p>
-</div>
-<script>
-const OWNER="+254791895658";let cur=localStorage.getItem('cur');if(cur!==OWNER){document.body.innerHTML='<div style="padding:40px;text-align:center"><h1>Access Denied</h1><p>Only owner +254791895658 can view. Your phone: '+cur+'</p><button onclick="location.href=\'index.html\'" style="padding:12px 24px;background:#2de2ff;border:none;border-radius:10px;font-weight:900">Go Login</button></div>'; throw new Error('not owner')}
-function refresh(){let users=JSON.parse(localStorage.getItem('u')||'{}');let total=Object.keys(users).length;document.getElementById('totalU').textContent=total;let sum=0,html='';for(let ph in users){let b=parseFloat(localStorage.getItem('b_'+ph)||0);sum+=b;let isO=ph===OWNER?' 👑 OWNER':'';html+=`<div class="userRow"><span>${ph}${isO}</span><span style="color:#00e676">$${b.toFixed(2)}</span></div>`}document.getElementById('totalB').textContent=sum.toFixed(2);document.getElementById('list').innerHTML=html||'No users';}
-function getTarget(){let cc=document.getElementById('cc').value;let ph=document.getElementById('ph').value.trim().replace(/^0+/,'');if(!ph)return null;return cc+ph}
-function addM(){let t=getTarget();let amt=parseFloat(document.getElementById('amt').value);if(!t||!amt){alert('Enter phone without 0 and amount');return}let b=parseFloat(localStorage.getItem('b_'+t)||0)+amt;localStorage.setItem('b_'+t,b);showMsg('Added $'+amt+' to '+t);refresh()}
-function subM(){let t=getTarget();let amt=parseFloat(document.getElementById('amt').value);if(!t||!amt){alert('Enter phone and amount');return}let b=parseFloat(localStorage.getItem('b_'+t)||0)-amt;if(b<0)b=0;localStorage.setItem('b_'+t,b);showMsg('Removed. New $'+b.toFixed(2));refresh()}
-function ban(){let t=getTarget();if(!t){alert('Enter phone');return}if(t===OWNER){alert('Cannot ban owner');return}if(!confirm('Ban '+t+'?'))return;let u=JSON.parse(localStorage.getItem('u')||'{}');delete u[t];localStorage.setItem('u',JSON.stringify(u));localStorage.removeItem('b_'+t);showMsg(t+' banned');refresh()}
-function showMsg(m){let e=document.getElementById('msg');e.textContent=m;e.style.display='block';setTimeout(()=>e.style.display='none',3000)}
-refresh();
 </script></body></html>
