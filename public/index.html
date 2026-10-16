@@ -1,15 +1,30 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SPN</title>
-<style>body{margin:0;background:#060a14;color:#fff;font-family:sans-serif;min-height:100vh}.card{background:#0f1930;border-radius:20px;padding:20px;max-width:400px;margin:40px auto}input,select{width:100%;padding:16px;margin:8px 0;border-radius:12px;border:2px solid #1e2f5a;background:#060c1e;color:#fff}button{width:100%;padding:16px;border-radius:12px;border:none;font-weight:900;margin-top:10px}</style>
-</head><body><div class="card">
-<select id="cc"><option value="+254">Kenya +254</option></select>
-<input id="ph" placeholder="791895658">
-<input id="pw" type="password" placeholder="123456">
-<button onclick="reg()" style="background:#2de2ff;color:#000">Create Account</button>
-<button onclick="log()" style="background:#162244;color:#fff;margin-top:8px">Login</button>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>SPN Trade - 3 Screens</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{background:#060a14;color:#fff;font-family:sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden}.top{height:56px;background:#0a1020;border-bottom:2px solid #1e2f5a;display:flex;align-items:center;justify-content:space-between;padding:0 14px}.tabs{height:64px;background:#0a1020;border-top:3px solid #1e2f5a;display:flex;gap:8px;padding:8px}.tab{flex:1;background:#162244;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;font-size:12px;border:2px solid #1e2f5a;cursor:pointer;pointer-events:auto}.tab.active{background:#ffcc00;color:#000;border-color:#ffcc00}.panel{display:none;flex:1;overflow:auto}.panel.active{display:flex;flex-direction:column}.market{padding:20px;border-bottom:1px solid #162244;display:flex;justify-content:space-between;align-items:center;font-size:16px;cursor:pointer}.market.active{background:#162244;color:#2de2ff;border-left:4px solid #2de2ff}.price{height:70px;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:900;border-bottom:2px solid #1e2f5a}.chart{flex:1;position:relative}canvas{width:100%;height:100%}input,select{width:100%;padding:22px;margin:12px 0;border-radius:16px;border:3px solid #1e2f5a;background:#0f1930;color:#fff;font-size:20px}button{width:100%;padding:22px;border-radius:16px;border:none;font-weight:900;font-size:20px;margin-top:12px;cursor:pointer;pointer-events:auto;z-index:10}.buy{background:#00e676;color:#000}.sell{background:#ff3d57;color:#fff}.owner{background:#ffcc00;color:#000}</style>
+</head><body>
+<div class="top"><b>SPN<span style="color:#2de2ff">BINARY</span></b><div><b id="bal" style="color:#00e676">$10000</b><button onclick="location.href='index.html'" style="width:auto;padding:8px 14px;border-radius:20px;background:#162244;color:#fff;font-size:12px">Logout</button></div></div>
+
+<div id="p1" class="panel active"><h2 style="padding:16px;color:#2de2ff">SCREEN 1 - MARKETS (Full Screen)</h2><div id="mlist"></div></div>
+
+<div id="p2" class="panel"><div class="price" id="pr">12169.15</div><div class="chart"><canvas id="cv"></canvas></div><p style="text-align:center;padding:10px;color:#8aa">SCREEN 2 - CHART FULL SCREEN</p></div>
+
+<div id="p3" class="panel"><div style="padding:20px;flex:1;display:flex;flex-direction:column;justify-content:center"><h2 style="margin-bottom:20px">SCREEN 3 - TRADE</h2><input id="amt" type="number" value="50" placeholder="Amount"><select id="dur"><option>30s</option><option>1m</option><option>5m</option></select><p style="margin:12px 0">Payout <span id="pay" style="color:#00e676">+$47.50</span></p><button class="buy" onclick="trade('buy')">▲ BUY - PRESSABLE</button><button class="sell" onclick="trade('sell')">▼ SELL - PRESSABLE</button><button class="owner" onclick="location.href='admin.html'">👑 OWNER - PRESSABLE</button></div></div>
+
+<div class="tabs">
+<div class="tab active" id="t1" onclick="openP(1)">📊<span>MARKETS</span></div>
+<div class="tab" id="t2" onclick="openP(2)">📈<span>CHART</span></div>
+<div class="tab" id="t3" onclick="openP(3)">💰<span>BUY/SELL</span></div>
 </div>
+
 <script>
-function gp(){return document.getElementById('cc').value+document.getElementById('ph').value}
-function reg(){localStorage.setItem('cur',gp());localStorage.setItem('b_'+gp(),'10000');location.href='trade.html'}
-function log(){localStorage.setItem('cur',gp());location.href='trade.html'}
+let cur=localStorage.getItem('cur');if(!cur)location.href='index.html';
+let price=12169.15;let bal=parseFloat(localStorage.getItem('b_'+cur)||'10000');document.getElementById('bal').innerText='$'+bal.toFixed(2);
+let markets=[{n:'Volatility 10',v:5423},{n:'Volatility 25',v:8345},{n:'Volatility 50',v:12345},{n:'Volatility 75',v:12543},{n:'Volatility 100',v:15678},{n:'EUR/USD',v:1.0845},{n:'GBP/USD',v:1.2734},{n:'BTC/USD',v:43256},{n:'Gold',v:2034}];
+let ml=document.getElementById('mlist');markets.forEach((m,i)=>{let d=document.createElement('div');d.className='market'+(i==3?' active':'');d.innerHTML='<div><b>'+m.n+'</b><br><span style="color:#8aa">'+m.v+'</span></div><div>></div>';d.onclick=()=>{document.querySelectorAll('.market').forEach(x=>x.classList.remove('active'));d.classList.add('active');price=m.v;document.getElementById('pr').innerText=price;openP(2)};ml.appendChild(d)});
+function openP(n){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('p'+n).classList.add('active');document.getElementById('t'+n).classList.add('active');if(n==2)draw()}
+let cv=document.getElementById('cv');let ctx=cv.getContext('2d');let candles=[];for(let i=0;i<30;i++)candles.push({o:price+(Math.random()-0.5)*20,h:price+10,l:price-10,c:price+(Math.random()-0.5)*5});
+function draw(){let W=cv.parentElement.clientWidth,H=cv.parentElement.clientHeight;cv.width=W*2;cv.height=H*2;cv.style.width=W+'px';cv.style.height=H+'px';ctx.scale(2,2);ctx.clearRect(0,0,W,H);let min=Math.min(...candles.map(c=>c.l)),max=Math.max(...candles.map(c=>c.h)),range=max-min||10;candles.forEach((c,i)=>{let x=i*(W/candles.length)+5,w=W/candles.length-4;let yH=H-(c.h-min)/range*H*0.8-20,yL=H-(c.l-min)/range*H*0.8-20,yO=H-(c.o-min)/range*H*0.8-20,yC=H-(c.c-min)/range*H*0.8-20;ctx.strokeStyle=c.c>c.o?'#00e676':'#ff3d57';ctx.beginPath();ctx.moveTo(x+w/2,yH);ctx.lineTo(x+w/2,yL);ctx.stroke();ctx.fillStyle=c.c>c.o?'#00e676':'#ff3d57';ctx.fillRect(x,Math.min(yO,yC),w,Math.abs(yO-yC)||2)});document.getElementById('pr').innerText=price.toFixed(2)}
+setInterval(()=>{price+=(Math.random()-0.5)*2;candles.shift();let o=candles[candles.length-1].c;candles.push({o:o,h:o+5,l:o-5,c:o+(Math.random()-0.5)*4});if(document.getElementById('p2').classList.contains('active'))draw()},800);
+function trade(t){let a=parseFloat(document.getElementById('amt').value)||50;if(a>bal){alert('Low balance');return}bal-=a;localStorage.setItem('b_'+cur,bal);document.getElementById('bal').innerText='$'+bal.toFixed(2);setTimeout(()=>{if(Math.random()>0.45){bal+=a*1.95;alert('WIN +$'+(a*0.95).toFixed(2))}else alert('LOSS -$'+a);localStorage.setItem('b_'+cur,bal);document.getElementById('bal').innerText='$'+bal.toFixed(2)},2000)}
+document.getElementById('amt').addEventListener('input',e=>{document.getElementById('pay').innerText='+$'+(parseFloat(e.target.value||0)*0.95).toFixed(2)})
 </script></body></html>
